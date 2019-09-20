@@ -54,7 +54,7 @@ class mainfile_manager {
 	var $report = '';
 	var $error = false;
 
-	function  __construct() {
+	function __construct() {
 	}
 
 	function setRewrite($def, $val) {
@@ -136,3 +136,5 @@ class mainfile_manager {
 		return $this->error;
 	}
 }
+
+?>
