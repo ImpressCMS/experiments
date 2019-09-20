@@ -177,7 +177,7 @@ class PathStuffController {
 
 	function checkTrustPathPermissions() {
 		$errors = array();
-		$errors['trustpath'] = $this->makeWritable( "$this->xoopsTrustPath" );
+		$errors['trustpath'] = $this->makeWritable((string)$this->xoopsTrustPath);
 		if (in_array( false, $errors )) {
 			$this->permErrors = $errors;
 			return false;
