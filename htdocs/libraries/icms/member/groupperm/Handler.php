@@ -293,10 +293,12 @@ class icms_member_groupperm_Handler extends icms_core_ObjectHandler {
 	 */
 	public function checkRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1, $webmasterAlwaysTrue=true) {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('gperm_modid', $gperm_modid));
-		$criteria->add(new icms_db_criteria_Item('gperm_name', $gperm_name));
+		$criteria_item = new icms_db_criteria_Item('gperm_name', $gperm_name);
+		$criteria->add($criteria_item);
 		$gperm_itemid = (int) $gperm_itemid;
 		if ($gperm_itemid > 0) {
-			$criteria->add(new icms_db_criteria_Item('gperm_itemid', $gperm_itemid));
+			$criteria_item_gpermid = new icms_db_criteria_Item('gperm_itemid', $gperm_itemid);
+			$criteria->add($criteria_item_gpermid);
 		}
 		if (is_array($gperm_groupid)) {
 			if ($webmasterAlwaysTrue && in_array(ICMS_GROUP_ADMIN, $gperm_groupid)) {
@@ -350,11 +352,14 @@ class icms_member_groupperm_Handler extends icms_core_ObjectHandler {
 	public function getItemIds($gperm_name, $gperm_groupid, $gperm_modid = 1) {
 		$ret = array();
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('gperm_name', $gperm_name));
-		$criteria->add(new icms_db_criteria_Item('gperm_modid', (int) $gperm_modid));
+		$criteria_item = new icms_db_criteria_Item('gperm_modid', (int) $gperm_modid);
+		$criteria->add($criteria_item);
+
 		if (is_array($gperm_groupid)) {
 			$criteria2 = new icms_db_criteria_Compo();
 			foreach ( $gperm_groupid as $gid) {
-				$criteria2->add(new icms_db_criteria_Item('gperm_groupid', $gid), 'OR');
+				$criteria_item2 = new icms_db_criteria_Item('gperm_groupid', $gid);
+				$criteria2->add($criteria_item2, 'OR');
 			}
 			$criteria->add($criteria2);
 		} else {

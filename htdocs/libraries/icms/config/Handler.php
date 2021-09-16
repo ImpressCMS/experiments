@@ -234,7 +234,8 @@ class icms_config_Handler {
 	public function &getConfigsByCat($category, $module = 0) {
 		if (is_array($category)) {
 			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('conf_modid', (int) $module));
-			$criteria->add(new icms_db_criteria_Item('conf_catid', '(' . implode(',', $category) . ')', 'IN'));
+			$criteria_item = new icms_db_criteria_Item('conf_catid', '(' . implode(',', $category) . ')', 'IN');
+			$criteria->add($criteria_item);
 			$configs = $this->getConfigs($criteria, true);
 			if (is_array($configs)) {
 				foreach ( array_keys($configs) as $i) {
@@ -250,7 +251,8 @@ class icms_config_Handler {
 
 			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('conf_modid', (int) $module));
 			if (!empty($category)) {
-				$criteria->add(new icms_db_criteria_Item('conf_catid', (int) $category));
+				$criteria_item = new icms_db_criteria_Item('conf_catid', (int) $category);
+				$criteria->add($criteria_item);
 			}
 			$ret = array();
 			$configs = $this->getConfigs($criteria, true);
