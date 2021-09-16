@@ -134,7 +134,7 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 
 		if (isset($side)) {
 			// get both sides in sidebox? (some themes need this)
-			$tp = ($side == -2)?'L':($side == -6)?'C':'';
+			$tp = ($side == -2) ? 'L' : (($side == -6) ? 'C' : '');
 			if ($tp != '') {
 			 	$q_side = "";
 				$icms_blockposition_handler = icms::handler('icms_view_block_position');
@@ -468,7 +468,8 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 	 */
 	private function &getMultiple($blockids) {
 		$criteria = new icms_db_criteria_Compo();
-		$criteria->add(new icms_db_criteria_Item('bid', '(' . implode(',', $blockids) . ')', 'IN'));
+		$criteria_item = new icms_db_criteria_Item('bid', '(' . implode(',', $blockids) . ')', 'IN');
+		$criteria->add($criteria_item);
 		$criteria->setSort('weight');
 		$ret = $this->getObjects($criteria, true, true);
 		$sql = "SELECT block_id, module_id, page_id FROM " . $this->db->prefix('block_module_link')
@@ -554,9 +555,7 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 
 		if (isset($side)) {
 			// get both sides in sidebox? (some themes need this)
-			$tp = ($side == -2)
-				? 'L'
-				: ($side == -6) ? 'C' : '';
+			$tp = ($side == -2) ? 'L' : (($side == -6) ? 'C' : '');
 			if ($tp != '') {
 				$side = "";
 				$s1 = "SELECT id FROM " . $this->db->prefix('block_positions') . " WHERE block_type='" . $tp . "' ORDER BY id ASC";
