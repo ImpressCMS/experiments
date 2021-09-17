@@ -164,25 +164,22 @@ class icms_core_DataFilter {
 	 * @return  string
 	 */
 	static public function addSlashes($text) {
-		if (!get_magic_quotes_gpc()) {
+
 			$text = addslashes($text);
-		}
+
 		return $text;
 	}
 
 	/**
 	 * Note: magic_quotes_gpc and magic_quotes_runtime are deprecated as of PHP5.3.0
-	 *		does that mean we can remove this function once 5.3 is minimum req?
-	 * if magic_quotes_gpc is on, strip back slashes
+	 *
 	 *
 	 * @param	string  $text
 	 * @return   string
 	 */
 	static public function stripSlashesGPC($text) {
-		if (get_magic_quotes_gpc()) {
-			$text = stripslashes($text);
-		}
-		return $text;
+
+				return $text;
 	}
 
 	/**
@@ -449,7 +446,7 @@ class icms_core_DataFilter {
 		icms::$preload->triggerEvent('beforeFilterTextareaInput', array(&$text));
 
 		$text = self::htmlSpecialChars($text);
-		$text = self::stripSlashesGPC($text);
+
 
 		icms::$preload->triggerEvent('afterFilterTextareaInput', array(&$text));
 
@@ -1230,7 +1227,7 @@ class icms_core_DataFilter {
 				switch($options1) {
 					case 'input':
 						default:
-						$data = self::stripSlashesGPC($data);
+
 						return self::filterHTMLinput($data);
 					break;
 
@@ -1257,12 +1254,10 @@ class icms_core_DataFilter {
 				switch($options1) {
 					case 'input':
 						default:
-						$data = self::stripSlashesGPC($data);
 						return self::filterTextareaInput($data);
 					break;
 
 					case 'output':
-						$data = self::stripSlashesGPC($data);
 						return self::filterTextareaDisplay($data);
 					break;
 
