@@ -142,8 +142,10 @@ function b_system_admin_modules_show() {
 	$module_handler = icms::handler('icms_module');
 	$moduleperm_handler = icms::handler('icms_member_groupperm');
 	$criteria = new icms_db_criteria_Compo();
-	$criteria->add(new icms_db_criteria_Item('hasadmin', 1));
-	$criteria->add(new icms_db_criteria_Item('isactive', 1));
+	$criteria_item_hasadmin = new icms_db_criteria_Item('hasadmin', 1);
+	$criteria_item_isactive = new icms_db_criteria_Item('isactive', 1);
+	$criteria->add($criteria_item_hasadmin);
+	$criteria->add($criteria_item_isactive);
 	$criteria->setSort('mid');
 	$modules = $module_handler->getObjects($criteria);
 	foreach ($modules as $module) {

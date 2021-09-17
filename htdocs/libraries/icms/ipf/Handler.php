@@ -303,7 +303,8 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 			 * In some situations, the $id is not an INTEGER. icms_ipf_ObjectTag is an example.
 			 * Is the fact that we removed the intval() represents a security risk ?
 			 */
-			$criteria->add(new icms_db_criteria_Item($this->keyName, $id, '=', $this->_itemname));
+			$criteria_item = new icms_db_criteria_Item($this->keyName, $id, '=', $this->_itemname);
+			$criteria->add($criteria_item);
 		}
 		$criteria->setLimit(1);
 		if ($debug) {

@@ -170,7 +170,8 @@ class icms_view_PageBuilder {
 
 		$icms_page_handler = icms::handler('icms_data_page');
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('page_url', $fullurl));
-		if (!empty($url)) $criteria->add(new icms_db_criteria_Item('page_url', $url), 'OR');
+		$criteria_item = new icms_db_criteria_Item('page_url', $url);
+		if (!empty($url)) $criteria->add($criteria_item, 'OR');
 		$pages = $icms_page_handler->getCount($criteria);
 
 		if ($pages > 0) {

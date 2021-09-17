@@ -205,7 +205,8 @@ function b_system_user_show() {
 		$block['uid'] = icms::$user->getVar('uid');
 		$block['lang_logout'] = _MB_SYSTEM_LOUT;
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('read_msg', 0));
-		$criteria->add(new icms_db_criteria_Item('to_userid', icms::$user->getVar('uid')));
+		$criteria_item = new icms_db_criteria_Item('to_userid', icms::$user->getVar('uid'));
+		$criteria->add($criteria_item);
 		$block['new_messages'] = $pm_handler->getCount($criteria);
 		$block['lang_inbox'] = _MB_SYSTEM_INBOX;
 		$block['lang_adminmenu'] = _MB_SYSTEM_ADMENU;

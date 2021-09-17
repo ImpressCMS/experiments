@@ -165,11 +165,11 @@ class SystemAutoTasks extends icms_ipf_Object {
 		if (substr($this->getVar('sat_type'), 0, 6) == 'addon/') {
 			$dirname = substr($this->getVar('sat_type'), 6);
 			if ($dirname == '') return FALSE;
-			
+
 			// only execute autotasks for active modules
 			$module = icms::handler("icms_module")->getByDirname($dirname);
 			if ($module->getVar("isactive") != 1) return FALSE;
-			
+
 			$dirname = ICMS_MODULES_PATH . '/' . $dirname;
 			$dirname = $dirname . '/' . $code;
 			$code = " require '" . $dirname . "';";
@@ -294,9 +294,12 @@ class SystemAutotasksHandler extends icms_ipf_Handler {
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->setSort('sat_lastruntime');
 		$criteria->setOrder('ASC');
-		$criteria->add( new icms_db_criteria_Item('(sat_lastruntime + sat_interval)', time(), '<=', NULL, "%s" ));
-		$criteria->add( new icms_db_criteria_Item('sat_repeat', 0, '>=', NULL, "'%s'"));
-		$criteria->add( new icms_db_criteria_Item('sat_enabled', 1));
+		$criteria_item_interval =  new icms_db_criteria_Item('(sat_lastruntime + sat_interval)', time(), '<=', NULL, "%s" );
+		$criteria_item_repeat =  new icms_db_criteria_Item('sat_repeat', 0, '>=', NULL, "'%s'");
+		$criteria_item_set = new icms_db_criteria_Item('sat_enabled', 1);
+		$criteria->add($criteria_item_interval);
+		$criteria->add($criteria_item_repeat);
+		$criteria->add( $criteria_item_set);
 		$rez = $this->getObjects($criteria, FALSE);
 		return $rez;
 	}
